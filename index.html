@@ -1,38 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Blue Sky Audio Visualizer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Audio Visualizer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <style>
-        body { 
-            margin: 0; 
-            background: #1e90ff;
+        body {
+            margin: 0;
+            padding: 0;
             overflow: hidden;
+            background-color: #000;
+            font-family: monospace;
         }
-        button {
+        .info-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #1fff4f;
+            padding: 10px;
+            border: 1px solid #1fff4f;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 100;
+            max-width: 250px;
+            display: none;
+        }
+        .controls {
             position: fixed;
             top: 20px;
             left: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 30px;
-            font-size: 16px;
-            font-family: 'Arial', sans-serif;
-            cursor: pointer;
             z-index: 100;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
+            display: none;
+        }
+        button {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #1fff4f;
+            border: 1px solid #1fff4f;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-family: monospace;
         }
         button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
+            background-color: rgba(31, 255, 79, 0.2);
         }
     </style>
 </head>
 <body>
-    <button onclick="startAudio()">Start Audio Input</button>
+    <div class="controls" id="controls">
+        <button id="saveButton">SAVE FRAME</button>
+        <button id="toggleInfo">TOGGLE INFO</button>
+        <button id="toggleMode">SWITCH MODE</button>
+    </div>
+    
+    <div class="info-panel" id="infoPanel">
+        <h3>MATRIX AUDIO VISUALIZER</h3>
+        <p>Speak or play audio to control the visualization.</p>
+        <p>Bass frequencies control color shifts.</p>
+        <p>Mid frequencies affect zoom level.</p>
+        <p>High frequencies control rotation speed.</p>
+    </div>
+    
     <script src="sketch.js"></script>
+    <script>
+        // Show controls after visualization starts
+        document.addEventListener('audioStarted', function() {
+            document.getElementById('controls').style.display = 'block';
+        });
+        
+        // Toggle info panel
+        document.getElementById('toggleInfo').addEventListener('click', function() {
+            let panel = document.getElementById('infoPanel');
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+            } else {
+                panel.style.display = 'none';
+            }
+        });
+        
+        // Save frame button
+        document.getElementById('saveButton').addEventListener('click', function() {
+            if (typeof saveCanvas === 'function') {
+                saveCanvas('matrix-visualization', 'png');
+            }
+        });
+        
+        // Mode switch - this will be connected to our sketch later
+        document.getElementById('toggleMode').addEventListener('click', function() {
+            if (typeof window.toggleVisualizationMode === 'function') {
+                window.toggleVisualizationMode();
+            }
+        });
+    </script>
 </body>
 </html>
