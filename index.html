@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>3D Audio Visualizer</title>
+    <title>Blue Sky Audio Visualizer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <style>
         body { 
             margin: 0; 
-            background: #000;
+            background: #1e90ff;
             overflow: hidden;
         }
         button {
@@ -14,17 +14,20 @@
             top: 20px;
             left: 20px;
             padding: 10px 20px;
-            background: #333;
-            color: #0f5;
-            border: none;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
             font-size: 16px;
+            font-family: 'Arial', sans-serif;
             cursor: pointer;
             z-index: 100;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
         }
         button:hover {
-            background: #444;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
     </style>
 </head>
